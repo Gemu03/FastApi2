@@ -1,6 +1,8 @@
 # Pasos para correr el proyecto
 
-1. Venv
+1. Abrir el proyecto desde Visual Studio Code
+
+2. Venv
 
 - windows
 
@@ -9,10 +11,10 @@
 - mac
   - `source env/bin/activate`
 
-2. Instalar dependencias
+3. Instalar dependencias
 
 - `pip install -r requirements.txt`
 
-3. Correr el proyecto
+4. Correr el proyecto
 
-- `uvicorn main:app --reload`
+- `python -m uvicorn main:app --reload`
