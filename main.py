@@ -8,13 +8,20 @@ from sqlalchemy.orm import Session
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
-class PostBase(BaseModel):
-    title: str
-    content: str
-    user_id: int
+class EmpleadoBase(BaseModel):
+    nombre: str
+    edad: int
+    correo: str
+    rol: str
+    responsabilidad: str
 
-class UserBase(BaseModel):
-    username: str
+class PerfilBase(BaseModel):
+    empleado_id: int
+    habilidad: str
+    años_experiencia: int
+    certificacion: str
+    tiempo_en_empresa: int
+    salario: int
 
 
 def get_db():
@@ -27,8 +34,58 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-@app.post("/users/", status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserBase, db: db_dependency):
-    db_user = models.User(**user.dict())
-    db.add(db_user)
+@app.post("/empleado/", status_code=status.HTTP_201_CREATED)
+async def create_empleado(empleado: EmpleadoBase, db: db_dependency):
+    db_empleado = models.Empleado(**empleado.dict())
+    db.add(db_empleado)
     db.commit()
+
+
+@app.get("/empleado/{empleado_id}",status_code=status.HTTP_200_OK)
+async def get_empleado(empleado_id: int, db: db_dependency):
+    db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
+    if db_empleado is None:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+    return db_empleado
+
+
+@app.get("/empleados/", status_code=status.HTTP_200_OK)
+async def get_empleados(db: db_dependency, skip: int = 0):
+    empleados = db.query(models.Empleado).offset(skip).all()
+    return empleados
+
+
+@app.post("/create_perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
+async def create_perfil(empleado_id: int, perfil_empleado: PerfilBase, db: db_dependency):
+    db_perfil = models.PerfilEmpleado(**perfil_empleado.dict())
+    db.add(db_perfil)
+    db.commit()
+
+
+@app.get("/get_perfil/{empleado_id}", status_code=status.HTTP_200_OK)
+async def get_perfil(empleado_id: int, db: db_dependency):
+    db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
+    if db_perfil is None:
+        raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    return db_perfil
+
+
+@app.delete("/delete_empleado/{empleado_id}", status_code=status.HTTP_200_OK)
+async def delete_empleado(empleado_id: int, db: db_dependency):
+    db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
+    if db_empleado is None:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+    db.delete(db_empleado)
+    db.commit()
+
+@app.post("/update_empleado/{empleado_id}", status_code=status.HTTP_200_OK)
+async def update_empleado(empleado_id: int, empleado: EmpleadoBase, db: db_dependency):
+    db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
+    if db_empleado is None:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+    db_empleado.nombre = empleado.nombre
+    db_empleado.edad = empleado.edad
+    db_empleado.correo = empleado.correo
+    db_empleado.rol = empleado.rol
+    db.commit()
+    return db_empleado
