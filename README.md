@@ -18,3 +18,4 @@
 4. Correr el proyecto
 
 - `python -m uvicorn main:app --reload`
+- Al iniciar va a mostrar una IP, al darle click irá al navegador y agregar '/docs'
