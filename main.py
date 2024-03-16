@@ -89,3 +89,16 @@ async def update_empleado(empleado_id: int, empleado: EmpleadoBase, db: db_depen
     db_empleado.rol = empleado.rol
     db.commit()
     return db_empleado
+
+@app.post("/update_perfil/{empleado_id}", status_code=status.HTTP_200_OK)
+async def update_perfil(empleado_id: int, perfil: PerfilBase, db: db_dependency):
+    db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
+    if db_perfil is None:
+        raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    db_perfil.habilidad = perfil.habilidad
+    db_perfil.años_experiencia = perfil.años_experiencia
+    db_perfil.certificacion = perfil.certificacion
+    db_perfil.tiempo_en_empresa = perfil.tiempo_en_empresa
+    db_perfil.salario = perfil.salario
+    db.commit()
+    return db_perfil
