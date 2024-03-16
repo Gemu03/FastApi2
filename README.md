@@ -1,4 +1,5 @@
 # Pasos para correr el proyecto
+# Estudiantes: Nicolás Castañeda, Giovanni Esteban Moreno, Mariana Chacon
 
 1. Abrir el proyecto desde Visual Studio Code
 
