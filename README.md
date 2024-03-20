@@ -1,6 +1,12 @@
-# Estudiantes: Nicolás Castañeda, Giovanni Esteban Moreno, Mariana Chacon
-# Pasos para correr el proyecto
+# FastAPI - Sistemas gestion de empleados y sus perfiles
 
+## Integrantes:
+
+- Nicolás Castañeda
+- Giovanni Esteban Moreno
+- Mariana Chacon
+
+# Pasos para correr el proyecto
 
 1. Abrir el proyecto desde Visual Studio Code
 

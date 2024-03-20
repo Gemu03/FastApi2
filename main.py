@@ -54,31 +54,7 @@ async def get_empleados(db: db_dependency, skip: int = 0):
     empleados = db.query(models.Empleado).offset(skip).all()
     return empleados
 
-
-@app.post("/create_perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
-async def create_perfil(empleado_id: int, perfil_empleado: PerfilBase, db: db_dependency):
-    db_perfil = models.PerfilEmpleado(**perfil_empleado.dict())
-    db.add(db_perfil)
-    db.commit()
-
-
-@app.get("/get_perfil/{empleado_id}", status_code=status.HTTP_200_OK)
-async def get_perfil(empleado_id: int, db: db_dependency):
-    db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
-    if db_perfil is None:
-        raise HTTPException(status_code=404, detail="Perfil no encontrado")
-    return db_perfil
-
-
-@app.delete("/delete_empleado/{empleado_id}", status_code=status.HTTP_200_OK)
-async def delete_empleado(empleado_id: int, db: db_dependency):
-    db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
-    if db_empleado is None:
-        raise HTTPException(status_code=404, detail="Empleado no encontrado")
-    db.delete(db_empleado)
-    db.commit()
-
-@app.post("/update_empleado/{empleado_id}", status_code=status.HTTP_200_OK)
+@app.post("/empleado/{empleado_id}", status_code=status.HTTP_200_OK)
 async def update_empleado(empleado_id: int, empleado: EmpleadoBase, db: db_dependency):
     db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
     if db_empleado is None:
@@ -90,7 +66,37 @@ async def update_empleado(empleado_id: int, empleado: EmpleadoBase, db: db_depen
     db.commit()
     return db_empleado
 
-@app.post("/update_perfil/{empleado_id}", status_code=status.HTTP_200_OK)
+
+@app.delete("/empleado/{empleado_id}", status_code=status.HTTP_200_OK)
+async def delete_empleado(empleado_id: int, db: db_dependency):
+    db_empleado = db.query(models.Empleado).filter(models.Empleado.id == empleado_id).first()
+    if db_empleado is None:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+    db.delete(db_empleado)
+    db.commit()
+
+
+@app.post("/perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
+async def create_perfil(empleado_id: int, perfil_empleado: PerfilBase, db: db_dependency):
+    db_perfil = models.PerfilEmpleado(**perfil_empleado.dict())
+    db.add(db_perfil)
+    db.commit()
+
+
+@app.get("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)
+async def get_perfil(empleado_id: int, db: db_dependency):
+    db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
+    if db_perfil is None:
+        raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    return db_perfil
+
+@app.get("/perfiles/", status_code=status.HTTP_200_OK)
+async def get_perfiles(db: db_dependency, skip: int = 0):
+    perfiles = db.query(models.PerfilEmpleado).offset(skip).all()
+    return perfiles
+
+
+@app.post("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)
 async def update_perfil(empleado_id: int, perfil: PerfilBase, db: db_dependency):
     db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
     if db_perfil is None:
@@ -102,3 +108,11 @@ async def update_perfil(empleado_id: int, perfil: PerfilBase, db: db_dependency)
     db_perfil.salario = perfil.salario
     db.commit()
     return db_perfil
+
+@app.delete("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)
+async def delete_perfil(empleado_id: int, db: db_dependency):
+    db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
+    if db_perfil is None:
+        raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    db.delete(db_perfil)
+    db.commit()
