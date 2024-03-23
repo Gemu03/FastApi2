@@ -33,13 +33,13 @@ def get_db():
 
 
 db_dependency = Annotated[Session, Depends(get_db)]
+    
 
 @app.post("/empleado/", status_code=status.HTTP_201_CREATED)
 async def create_empleado(empleado: EmpleadoBase, db: db_dependency):
-    db_empleado = models.Empleado(**empleado.dict())
+    db_empleado = models.Empleado(**empleado.model_dump())
     db.add(db_empleado)
     db.commit()
-
 
 @app.get("/empleado/{empleado_id}",status_code=status.HTTP_200_OK)
 async def get_empleado(empleado_id: int, db: db_dependency):
@@ -75,14 +75,12 @@ async def delete_empleado(empleado_id: int, db: db_dependency):
     db.delete(db_empleado)
     db.commit()
 
-
-@app.post("/perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
+@app.post("/nuevo_perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
 async def create_perfil(empleado_id: int, perfil_empleado: PerfilBase, db: db_dependency):
-    db_perfil = models.PerfilEmpleado(**perfil_empleado.dict())
+    db_perfil = models.PerfilEmpleado(**perfil_empleado.model_dump())
     db.add(db_perfil)
     db.commit()
-
-
+    
 @app.get("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)
 async def get_perfil(empleado_id: int, db: db_dependency):
     db_perfil = db.query(models.PerfilEmpleado).filter(models.PerfilEmpleado.empleado_id == empleado_id).first()
@@ -94,7 +92,6 @@ async def get_perfil(empleado_id: int, db: db_dependency):
 async def get_perfiles(db: db_dependency, skip: int = 0):
     perfiles = db.query(models.PerfilEmpleado).offset(skip).all()
     return perfiles
-
 
 @app.post("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)
 async def update_perfil(empleado_id: int, perfil: PerfilBase, db: db_dependency):
