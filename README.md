@@ -37,4 +37,6 @@
 - pip install pytest pytest-cov mutmut
 - pip install httpx
 - pytest --cov=.
+- mutmut run --paths-to-mutate . --tests-dir
+- mutmut results
 
