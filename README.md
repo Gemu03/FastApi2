@@ -29,7 +29,14 @@
 - Al iniciar va a mostrar una IP, al darle click irá al navegador y agregar '/docs'
 
 # Para ejecutar las pruebas 
-- Ejecutar con normalidad el archivo tests.py
+- Ejecutar con normalidad el archivo _tests.py
 - Si alguna de las pruebas falla, eliminar el archivo test.db y volver a intentar
 
+# Comprobar covertura y fuerza
+
+- pip install pytest pytest-cov mutmut
+- pip install httpx
+- pytest --cov=.
+- mutmut run --paths-to-mutate . --tests-dir
+- mutmut results
 
