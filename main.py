@@ -1,35 +1,15 @@
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel
 from typing import Annotated
-import models
-from database import SessionLocal, engine
+import models.models as models
+from database.database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
+from schemas.schemas import EmpleadoBase, PerfilBase
+
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
-class EmpleadoBase(BaseModel):
-    nombre: str
-    edad: int
-    correo: str
-    rol: str
-    responsabilidad: str
-
-class PerfilBase(BaseModel):
-    empleado_id: int
-    habilidad: str
-    años_experiencia: int
-    certificacion: str
-    tiempo_en_empresa: int
-    salario: int
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 db_dependency = Annotated[Session, Depends(get_db)]
