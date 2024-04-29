@@ -8,7 +8,7 @@
 
 # Pasos para correr el proyecto
 
-1. Abrir el proyecto desde Visual Studio Code
+1. Abrir el proyecto desde Visual Studio Code.
 
 2. Venv
 
