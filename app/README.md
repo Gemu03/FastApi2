@@ -34,7 +34,7 @@
 - Para ejecutar las pruebas se debe tener pytest y ejecutar h2.py en terminal así:
  `pytest h2.py` 
 - Ejecutar con normalidad el archivo _tests.py
-- Si alguna de las pruebas falla, eliminar el archivo test.db y volver a intentar
+- Si alguna de las pruebas falla, eliminar el archivo test.db y volver a intentar.
 
 # Comprobar cobertura y fuerza
 
