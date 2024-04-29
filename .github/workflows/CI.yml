@@ -31,18 +31,10 @@ jobs:
       
     - name: Iniciar sesión en Docker Hub
       run: echo ${{ secrets.DOCKERHUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-    - name: Obtener la versión actual
-      id: get_version
-      run: echo "::set-output name=version::$(git describe --abbrev=0 --tags || echo '1.0.0')"
-    
-    - name: Incrementar la versión
-      id: increment_version
-      run: echo "::set-output name=version::$(echo ${{ steps.get_version.outputs.version }} | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')"
     
     - name: Construir y subir la imagen
       run: |
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-docker:${{ steps.increment_version.outputs.version }} --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-docker:v${{ github.run_number }} --push .
 
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
