@@ -42,11 +42,7 @@ jobs:
     
     - name: Construir y subir la imagen
       run: |
-        docker buildx create --use
-        docker buildx build \
-          --file Dockerfile \
-          --tag 7b826c16c967 nicolascasol/fastapi2:${{ steps.increment_version.outputs.version }} \
-          --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-docker:${{ steps.increment_version.outputs.version }} --push .
 
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
