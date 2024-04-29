@@ -26,7 +26,7 @@
 
 4. Correr el proyecto
 
-- `python -m uvicorn main:app --reload`
+- `python -m uvicorn app.main:app --reload`
 - Al iniciar va a mostrar una IP, al darle click irá al navegador y agregar '/docs'
 
 # Para ejecutar las pruebas 
