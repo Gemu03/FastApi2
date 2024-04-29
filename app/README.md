@@ -14,8 +14,8 @@
 
 - windows
 
-  - `.\env\Scripts\activate.bat`  
-  - `.\env\Scripts\Activate.ps1`
+  - `.\env\Scripts\activate.bat`  CMD
+  - `.\env\Scripts\Activate.ps1`  PowerShell
 
 - mac
   - `source env/bin/activate`
