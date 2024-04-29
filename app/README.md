@@ -36,7 +36,7 @@
 - Ejecutar con normalidad el archivo _tests.py
 - Si alguna de las pruebas falla, eliminar el archivo test.db y volver a intentar
 
-# Comprobar covertura y fuerza
+# Comprobar cobertura y fuerza
 
 - pip install pytest pytest-cov mutmut
 - pip install httpx
