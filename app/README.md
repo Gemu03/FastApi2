@@ -30,6 +30,7 @@
 - Al iniciar va a mostrar una IP, al darle click irá al navegador y agregar '/docs'
 
 # Para ejecutar las pruebas 
+- `cd app` cambiar a la carpeta app
 - Para ejecutar las pruebas se debe tener pytest y ejecutar h2.py en terminal así:
  `pytest h2.py` 
 - Ejecutar con normalidad el archivo _tests.py
