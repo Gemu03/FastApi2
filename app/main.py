@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel
 from typing import Annotated
-import models.models as models
-from database.database import SessionLocal, engine, get_db
+import app.models.models as models
+from app.database.database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
-from schemas.schemas import EmpleadoBase, PerfilBase
+from app.schemas.schemas import EmpleadoBase, PerfilBase
 
 
 app = FastAPI()

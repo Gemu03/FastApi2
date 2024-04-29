@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
-from database.database import Base
+from app.database.database import Base
 from sqlalchemy.orm import relationship
 
 class Empleado(Base):
