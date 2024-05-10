@@ -3,3 +3,5 @@ uvicorn
 sqlalchemy
 pymysql
 pytest
+reactpy[fastapi]
+reactpy_router
