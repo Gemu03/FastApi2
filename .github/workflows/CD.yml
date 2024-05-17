@@ -34,7 +34,7 @@ jobs:
     
     - name: Construir y subir la imagen
       run: |
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-docker:1.0.${{ github.run_number }} --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/fastapi-docker:1.1.${{ github.run_number }} --push .
 
     env:
       DOCKER_CLI_EXPERIMENTAL: enabled
