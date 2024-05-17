@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from reactpy import component, html
 from reactpy.backend.fastapi import configure
@@ -39,17 +40,14 @@ db_dependency = Annotated[Session, Depends(get_db)]# Dependencia para obtener la
 
 @app.on_event("startup")
 async def startup_event():
-    async for _ in initialize_cliente_notificaciones(app):
-        pass
+    app.state.cliente_notificaciones = ClienteNotificaciones()
 
-async def initialize_cliente_notificaciones(app: FastAPI):
+""" def actualizar_suscriptores():
     db = SessionLocal()
-    cliente_notificaciones = ClienteNotificaciones(db)
+    cliente_notificaciones = app.state.cliente_notificaciones
+    cliente_notificaciones.limpiar_suscriptores()       
     cliente_notificaciones.cargar_suscriptores()
-    app.state.cliente_notificaciones = cliente_notificaciones  # Almacena la instancia en el estado de la aplicación
-    yield
-    db.close()
-
+    db.close() """
 
 @app.get("/")
 async def root():
@@ -60,11 +58,12 @@ async def root():
 async def create_empleado(empleado: EmpleadoBase, db: db_dependency):
     db_empleado = empleado_model(**empleado.model_dump())
     db.add(db_empleado)
-    db.commit()  
+    db.commit()
+    #actualizar_suscriptores()  
     try:
         cliente_notificaciones = app.state.cliente_notificaciones
         if cliente_notificaciones is not None:
-            cliente_notificaciones.enviar_notificacion(f"Denle la bienvenida a {db_empleado.nombre} en su nuevo cargo como {db_empleado.rol}")
+            cliente_notificaciones.enviar_notificacion(db, f"Denle la bienvenida a {db_empleado.nombre} en su nuevo cargo como {db_empleado.rol}")
     except Exception as e:
         print(e)
     
@@ -92,6 +91,9 @@ async def update_empleado(empleado_id: int, empleado: EmpleadoBase, db: db_depen
     db_empleado.correo = empleado.correo
     db_empleado.rol = empleado.rol
     db.commit()
+    #actualizar_suscriptores()
+
+    #notificar un nuevo cargo o algo asi
     return db_empleado
 
 
@@ -102,10 +104,11 @@ async def delete_empleado(empleado_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     db.delete(db_empleado)
     db.commit()
+    #actualizar_suscriptores()
     try:
         cliente_notificaciones = app.state.cliente_notificaciones
         if cliente_notificaciones is not None:
-            cliente_notificaciones.enviar_notificacion(f"{db_empleado.nombre}, {db_empleado.rol} se despide de la empresa. Le deseamos lo mejor en sus futuros proyectos")
+            cliente_notificaciones.enviar_notificacion(db, f"{db_empleado.nombre}, {db_empleado.rol} se despide de la empresa. Le deseamos lo mejor en sus futuros proyectos")
     except Exception as e:
         print(e)
 
@@ -137,7 +140,9 @@ async def update_perfil(empleado_id: int, perfil: PerfilEmpleadoBase, db: db_dep
     db_perfil.certificacion = perfil.certificacion
     db_perfil.tiempo_en_empresa = perfil.tiempo_en_empresa
     db_perfil.salario = perfil.salario
+    db_perfil.suscripcion_notificaciones = perfil.suscripcion_notificaciones
     db.commit()
+    #actualizar_suscriptores()
     return db_perfil
 
 @app.delete("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)

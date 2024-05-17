@@ -42,3 +42,6 @@ class GestorNotificaciones(INotificador):
     def notificar_suscriptores(self, mensaje):
         for suscriptor in self._suscriptores:
             suscriptor.actualizar(mensaje)
+
+    def limpiar_suscriptores(self):
+        self._suscriptores = []
