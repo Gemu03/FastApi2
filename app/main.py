@@ -13,6 +13,7 @@ from app.schemas.empleado import EmpleadoBase
 from app.schemas.perfilEmpleado import PerfilEmpleadoBase
 from starlette.websockets import WebSocket, WebSocketDisconnect
 from app.databases.database import Base
+from app.services.notificaciones import ClienteNotificaciones
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -35,17 +36,38 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine) # Crear las tablas en la base de datos
 db_dependency = Annotated[Session, Depends(get_db)]# Dependencia para obtener la sesión de la base de datos
 
+
+@app.on_event("startup")
+async def startup_event():
+    async for _ in initialize_cliente_notificaciones(app):
+        pass
+
+async def initialize_cliente_notificaciones(app: FastAPI):
+    db = SessionLocal()
+    cliente_notificaciones = ClienteNotificaciones(db)
+    cliente_notificaciones.cargar_suscriptores()
+    app.state.cliente_notificaciones = cliente_notificaciones  # Almacena la instancia en el estado de la aplicación
+    yield
+    db.close()
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
 
 
 @app.post("/empleado/", status_code=status.HTTP_201_CREATED)
 async def create_empleado(empleado: EmpleadoBase, db: db_dependency):
     db_empleado = empleado_model(**empleado.model_dump())
     db.add(db_empleado)
-    db.commit()
+    db.commit()  
+    try:
+        cliente_notificaciones = app.state.cliente_notificaciones
+        if cliente_notificaciones is not None:
+            cliente_notificaciones.enviar_notificacion(f"Denle la bienvenida a {db_empleado.nombre} en su nuevo cargo como {db_empleado.rol}")
+    except Exception as e:
+        print(e)
+    
 
 @app.get("/empleado/{empleado_id}",status_code=status.HTTP_200_OK)
 async def get_empleado(empleado_id: int, db: db_dependency):
@@ -80,6 +102,12 @@ async def delete_empleado(empleado_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     db.delete(db_empleado)
     db.commit()
+    try:
+        cliente_notificaciones = app.state.cliente_notificaciones
+        if cliente_notificaciones is not None:
+            cliente_notificaciones.enviar_notificacion(f"{db_empleado.nombre}, {db_empleado.rol} se despide de la empresa. Le deseamos lo mejor en sus futuros proyectos")
+    except Exception as e:
+        print(e)
 
 @app.post("/nuevo_perfil/{empleado_id}", status_code=status.HTTP_201_CREATED)
 async def create_perfil(empleado_id: int, perfil_empleado: PerfilEmpleadoBase, db: db_dependency):

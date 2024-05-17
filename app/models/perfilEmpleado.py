@@ -11,5 +11,6 @@ class PerfilEmpleado(Base):
     certificacion = Column(String(50), index=True)
     tiempo_en_empresa = Column(Integer, index=True)
     salario = Column(Integer, index=True)
+    suscripcion_notificaciones = Column(Boolean, default=False)
 
     empleado = relationship("Empleado", back_populates="perfiles")

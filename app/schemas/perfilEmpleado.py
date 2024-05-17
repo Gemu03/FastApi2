@@ -7,3 +7,4 @@ class PerfilEmpleadoBase(BaseModel):
     certificacion: str
     tiempo_en_empresa: int
     salario: int
+    suscripcion_notificaciones: bool
