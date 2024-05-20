@@ -23,6 +23,7 @@ function Table() {
   <table>
         <thead>
           <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Rol</th>
               <th>Edad</th>

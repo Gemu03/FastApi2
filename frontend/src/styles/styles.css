@@ -59,3 +59,12 @@ table{
     background-color: #f2f2f2;
   }
 }
+
+section.isNotEditing{ 
+  display: flex;
+  flex-direction: column;
+}
+section.isEditing{ 
+  display: flex;
+  flex-direction: column;
+}

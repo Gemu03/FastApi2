@@ -42,12 +42,6 @@ db_dependency = Annotated[Session, Depends(get_db)]# Dependencia para obtener la
 async def startup_event():
     app.state.cliente_notificaciones = ClienteNotificaciones()
 
-""" def actualizar_suscriptores():
-    db = SessionLocal()
-    cliente_notificaciones = app.state.cliente_notificaciones
-    cliente_notificaciones.limpiar_suscriptores()       
-    cliente_notificaciones.cargar_suscriptores()
-    db.close() """
 
 @app.get("/")
 async def root():

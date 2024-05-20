@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-function Modifier(){
+function Modifier( props ) {
     const [isEditing, setIsEditing] = useState(false);
     const toogleEditar = (event) => {
         event.preventDefault();
@@ -39,28 +39,53 @@ function Modifier(){
 
     return (
     <form>
+        {isEditing ? 
+            <section className='isEditing'>
+                <h2>Modo Edición</h2>
+                <label htmlFor="nombre">Nombre</label>
+                <input className='editingNombre' type="text" id="nombre" placeholder="Juan" />
 
-        <label htmlFor="nombre">Nombre</label>
-        <input type="text" id="nombre" placeholder="Juan" />
+                <label htmlFor="rol">Rol</label>
+                <input className='editingRol' type="text" id="rol" placeholder="Director" />
 
-        <label htmlFor="rol">Rol</label>
-        <input type="text" id="rol" placeholder="Director" />
+                <label htmlFor="edad">Edad</label>
+                <input className='editingEdad' type="number" id="edad" placeholder="34" />
 
-        <label htmlFor="edad">Edad</label>
-        <input type="number" id="edad" placeholder="34" />
+                <label htmlFor="correo">Correo</label>
+                <input className='editingCorreo' type="email" id="correo" placeholder="juan@gmail.com" />
 
-        <label htmlFor="correo">Correo</label>
-        <input type="email" id="correo" placeholder="juan@gmail.com" />
+                <label htmlFor="responsabilidad">Responsabilidad</label>
+                <input className='editingResponsabilidad' type="text" id="responsabilidad" placeholder="Desarrollar" />
 
-        <label htmlFor="responsabilidad">Responsabilidad</label>
-        <input type="text" id="responsabilidad" placeholder="Desarrollar" />
+                <div className="botones">
+                    <button onClick={createEmpleado}>Confirmar</button>
+                    <button onClick={toogleEditar}>Cancelar</button>
+                </div>
+            </section>
+            : 
+            <section className='isNotEditing'>
+                <h2>Modo Registro</h2> 
+                <label htmlFor="nombre">Nombre</label>
+                <input type="text" id="nombre" placeholder="Juan" />
 
-        <div className="botones">
-            <button onClick={createEmpleado}>Agregar empleado</button>
-            <button onClick={toogleEditar}>Editar empleado</button>
-        </div>
+                <label htmlFor="rol">Rol</label>
+                <input type="text" id="rol" placeholder="Director" />
 
-        {isEditing ? <h2>Estás editando</h2> : <h2>No estás editando</h2>}
+                <label htmlFor="edad">Edad</label>
+                <input type="number" id="edad" placeholder="34" />
+
+                <label htmlFor="correo">Correo</label>
+                <input type="email" id="correo" placeholder="juan@gmail.com" />
+
+                <label htmlFor="responsabilidad">Responsabilidad</label>
+                <input type="text" id="responsabilidad" placeholder="Desarrollar" />
+
+                <div className="botones">
+                    <button onClick={createEmpleado}>Agregar empleado</button>
+                    <button onClick={toogleEditar}>Cambiar Modo</button>
+                </div>
+            </section>
+            }
 
     </form>
     )
