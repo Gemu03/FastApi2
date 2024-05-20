@@ -42,20 +42,20 @@ function Modifier( props ) {
         {isEditing ? 
             <section className='isEditing'>
                 <h2>Modo Edición</h2>
-                <label htmlFor="nombre">Nombre</label>
-                <input className='editingNombre' type="text" id="nombre" placeholder="Juan" />
+                <label ref={contNombre} htmlFor="nombre">Nombre</label>
+                <input type="text" id="nombre" placeholder="Juan" />
 
-                <label htmlFor="rol">Rol</label>
-                <input className='editingRol' type="text" id="rol" placeholder="Director" />
+                <label id='editingRol' htmlFor="rol">Rol</label>
+                <input  type="text" id="rol" placeholder="Director" />
 
-                <label htmlFor="edad">Edad</label>
-                <input className='editingEdad' type="number" id="edad" placeholder="34" />
+                <label id='editingEdad' htmlFor="edad">Edad</label>
+                <input type="number" id="edad" placeholder="34" />
 
-                <label htmlFor="correo">Correo</label>
-                <input className='editingCorreo' type="email" id="correo" placeholder="juan@gmail.com" />
+                <label id='editingCorreo' htmlFor="correo">Correo</label>
+                <input type="email" id="correo" placeholder="juan@gmail.com" />
 
-                <label htmlFor="responsabilidad">Responsabilidad</label>
-                <input className='editingResponsabilidad' type="text" id="responsabilidad" placeholder="Desarrollar" />
+                <label id='editingResponsabilidad' htmlFor="responsabilidad">Responsabilidad</label>
+                <input  type="text" id="responsabilidad" placeholder="Desarrollar" />
 
                 <div className="botones">
                     <button onClick={createEmpleado}>Confirmar</button>

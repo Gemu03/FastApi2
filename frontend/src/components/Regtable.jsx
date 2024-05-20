@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 
 function Regtable(data){
@@ -38,15 +38,24 @@ function Regtable(data){
         })
             .then((res) => res.json())
             .then((data) => {
-            console.table(data);
-            alert("ID: " + data.id + "\nNombre: " + data.nombre + "\nRol: " + data.rol + "\nEdad: " + data.edad + "\nCorreo: " + data.correo + "\nResponsabilidad: " + data.responsabilidad);
+/*             alert("ID: " + data.id + "\nNombre: " + data.nombre + "\nRol: " + data.rol + "\nEdad: " + data.edad + "\nCorreo: " + data.correo + "\nResponsabilidad: " + data.responsabilidad); */
         }
             )
             .catch((error) => {
             console.error('Error fetching empleados:', error);
             }
             );
+            ponerEmpleado(data);
         }
+
+        const ponerEmpleado = (data) => {
+            const contNombre = useRef( data.nombre)
+            
+            alert("ID: " + data.id + "\nNombre: " + data.nombre + "\nRol: " + data.rol + "\nEdad: " + data.edad + "\nCorreo: " + data.correo + "\nResponsabilidad: " + data.responsabilidad);
+
+            console.log(contNombre.current);
+        }
+
 
     
     return(
