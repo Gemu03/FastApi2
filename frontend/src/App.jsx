@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import EmployeeProfile from './EmployeeProfile';
 
 function App() {
   const [empleados, setEmpleados] = useState([]);
@@ -126,92 +128,101 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Gestión de empleados</h1>
-      <p>Proyecto creado con FastAPI, React y MySQL para hacer un CRUD de empleados.</p>
-      <main>
-        <form onSubmit={createOrUpdateEmpleado}>
-          {isEditing ? (
-            <section className="isEditing">
-              <h2>Modo Edición</h2>
-              <label htmlFor="nombre">Nombre</label>
-              <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Juan" />
+    <Router>
+      <div className="App">
+        <h1>Gestión de empleados</h1>
+        <p>Proyecto creado con FastAPI, React y MySQL para hacer un CRUD de empleados.</p>
+        <main>
+          <form onSubmit={createOrUpdateEmpleado}>
+            {isEditing ? (
+              <section className="isEditing">
+                <h2>Modo Edición</h2>
+                <label htmlFor="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Juan" />
 
-              <label htmlFor="rol">Rol</label>
-              <input type="text" id="rol" name="rol" value={formData.rol} onChange={handleChange} placeholder="Director" />
+                <label htmlFor="rol">Rol</label>
+                <input type="text" id="rol" name="rol" value={formData.rol} onChange={handleChange} placeholder="Director" />
 
-              <label htmlFor="edad">Edad</label>
-              <input type="number" id="edad" name="edad" value={formData.edad} onChange={handleChange} placeholder="34" />
+                <label htmlFor="edad">Edad</label>
+                <input type="number" id="edad" name="edad" value={formData.edad} onChange={handleChange} placeholder="34" />
 
-              <label htmlFor="correo">Correo</label>
-              <input type="email" id="correo" name="correo" value={formData.correo} onChange={handleChange} placeholder="juan@gmail.com" />
+                <label htmlFor="correo">Correo</label>
+                <input type="email" id="correo" name="correo" value={formData.correo} onChange={handleChange} placeholder="juan@gmail.com" />
 
-              <label htmlFor="responsabilidad">Responsabilidad</label>
-              <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
+                <label htmlFor="responsabilidad">Responsabilidad</label>
+                <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
 
-              <div className="botones">
-                <button type="submit">Confirmar</button>
-                <button onClick={toggleEditar}>Cancelar</button>
-              </div>
-            </section>
-          ) : (
-            <section className="isNotEditing">
-              <h2>Modo Registro</h2>
-              <label htmlFor="nombre">Nombre</label>
-              <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Juan" />
+                <div className="botones">
+                  <button type="submit">Confirmar</button>
+                  <button onClick={toggleEditar}>Cancelar</button>
+                </div>
+              </section>
+            ) : (
+              <section className="isNotEditing">
+                <h2>Modo Registro</h2>
+                <label htmlFor="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Juan" />
 
-              <label htmlFor="rol">Rol</label>
-              <input type="text" id="rol" name="rol" value={formData.rol} onChange={handleChange} placeholder="Director" />
+                <label htmlFor="rol">Rol</label>
+                <input type="text" id="rol" name="rol" value={formData.rol} onChange={handleChange} placeholder="Director" />
 
-              <label htmlFor="edad">Edad</label>
-              <input type="number" id="edad" name="edad" value={formData.edad} onChange={handleChange} placeholder="34" />
+                <label htmlFor="edad">Edad</label>
+                <input type="number" id="edad" name="edad" value={formData.edad} onChange={handleChange} placeholder="34" />
 
-              <label htmlFor="correo">Correo</label>
-              <input type="email" id="correo" name="correo" value={formData.correo} onChange={handleChange} placeholder="juan@gmail.com" />
+                <label htmlFor="correo">Correo</label>
+                <input type="email" id="correo" name="correo" value={formData.correo} onChange={handleChange} placeholder="juan@gmail.com" />
 
-              <label htmlFor="responsabilidad">Responsabilidad</label>
-              <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
+                <label htmlFor="responsabilidad">Responsabilidad</label>
+                <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
 
-              <div className="botones">
-                <button type="submit">Agregar empleado</button>
-                <button onClick={toggleEditar}>Cambiar Modo</button>
-              </div>
-            </section>
-          )}
-        </form>
+                <div className="botones">
+                  <button type="submit">Agregar empleado</button>
+                  <button onClick={toggleEditar}>Cambiar Modo</button>
+                </div>
+              </section>
+            )}
+          </form>
 
-        <button onClick={getEmpleados}>Obtener empleados</button>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Rol</th>
-              <th>Edad</th>
-              <th>Correo</th>
-              <th>Responsabilidad</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {empleados.filter(emp => emp).map((empleado, index) => (
-              <tr key={empleado.id || index}>
-                <td>{empleado.id}</td>
-                <td>{empleado.nombre}</td>
-                <td>{empleado.rol}</td>
-                <td>{empleado.edad}</td>
-                <td>{empleado.correo}</td>
-                <td>{empleado.responsabilidad}</td>
-                <td>
-                  <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
-                  <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
-                </td>
+          <button onClick={getEmpleados}>Obtener empleados</button>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Edad</th>
+                <th>Correo</th>
+                <th>Responsabilidad</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
-    </div>
+            </thead>
+            <tbody>
+              {empleados.filter(emp => emp).map((empleado, index) => (
+                <tr key={empleado.id || index}>
+                  <td>{empleado.id}</td>
+                  <td>{empleado.nombre}</td>
+                  <td>{empleado.rol}</td>
+                  <td>{empleado.edad}</td>
+                  <td>{empleado.correo}</td>
+                  <td>{empleado.responsabilidad}</td>
+                  <td>
+                    <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
+                    <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
+                    <Link to={`/perfil/${empleado.id}`}>
+                      <button>Ver Perfiles</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </main>
+      </div>
+
+      <Routes>
+        <Route path="/perfil/:empleadoId" element={<EmployeeProfile />} />
+      </Routes>
+    </Router>
   );
 }
 
