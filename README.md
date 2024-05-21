@@ -42,3 +42,6 @@
 - mutmut run --paths-to-mutate . --tests-dir
 - mutmut results
 pytest h2
+
+# Imagen de Docker
+- https://hub.docker.com/repository/docker/nicolascasol/fastapi-docker/general
