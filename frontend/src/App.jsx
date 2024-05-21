@@ -133,7 +133,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1>Gestión de empleados</h1>
+        <h1 style={{marginTop: 20}}>Gestión de empleados</h1>
         <p>Proyecto creado con FastAPI, React y MySQL para hacer un CRUD de empleados.</p>
         <main>
           <form onSubmit={createOrUpdateEmpleado}>
@@ -186,7 +186,7 @@ function App() {
             )}
           </form>
           <div>
-            <button onClick={getEmpleados}>Obtener empleados</button>
+            <button className="botonGetEmpleados" onClick={getEmpleados}>Obtener empleados</button>
             <table>
               <thead>
                 <tr>
@@ -208,7 +208,7 @@ function App() {
                     <td>{empleado.edad}</td>
                     <td>{empleado.correo}</td>
                     <td>{empleado.responsabilidad}</td>
-                    <td>
+                    <td className='botonesTabla'>
                       <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
                       <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
                       <Link to={`/perfil/${empleado.id}`}>

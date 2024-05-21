@@ -129,12 +129,13 @@ const EmployeeProfile = () => {
   };
 
   return (
-    <div>
+    <div className='App'>
       <h2>Perfil de Empleado, ID: {empleadoId}</h2>
       <Link to="/">
         <button>Volver</button>
       </Link>
-      <form onSubmit={savePerfil}>
+      <div className='perfilContainer'>
+<form onSubmit={savePerfil}>
         <label htmlFor="habilidad">Habilidad</label>
         <input
           type="text"
@@ -205,7 +206,8 @@ const EmployeeProfile = () => {
         </div>
       </form>
 
-      <table>
+<div>
+  <table>
         <thead>
           <tr>
             <th>ID Empleado</th>
@@ -237,6 +239,11 @@ const EmployeeProfile = () => {
           ))}
         </tbody>
       </table>
+</div>
+
+      </div>
+      
+      
     </div>
   );
 };
