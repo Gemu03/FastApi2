@@ -214,14 +214,14 @@ const EmployeeProfile = () => {
         </div>
 
         <div className="botones">
-          <button className='outerButton' type="submit">{isEditing ? 'Actualizar Perfil' : 'Agregar Perfil'}</button>
-          {isEditing && <button onClick={() => setIsEditing(false)}>Cancelar</button>}
+          <button className='outerButton'  type="submit">{isEditing ? 'Actualizar Perfil' : 'Agregar Perfil'}</button>
+          {isEditing && <button className='outerButton' onClick={() => setIsEditing(false)}>Cancelar</button>}
         </div>
       </form>
 
-<div>
+<div> 
               <Link to="/">
-                <button className='outerButton ' >Volver</button>
+                <button className='outerButton botonGetEmpleados ' >Volver</button>
               </Link>
   <table>
         <thead>

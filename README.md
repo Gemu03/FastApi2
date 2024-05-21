@@ -13,7 +13,7 @@
 2. Venv
 
 - windows
-
+  - `python -m venv venv`  Crear entorno virtual
   - `.\env\Scripts\activate.bat`  CMD
   - `.\venv\Scripts\Activate.ps1`  PowerShell
 
@@ -21,13 +21,12 @@
   - `source env/bin/activate`
 
 3. Instalar dependencias
-
 - `pip install -r requirements.txt`
 
 4. Correr el proyecto
-
-- `python -m uvicorn app.main:app --reload`
-- Al iniciar va a mostrar una IP, al darle click irá al navegador y agregar '/docs'
+- `python -m uvicorn app.main:app --reload` Corre en el puerto 8000
+- `cd frontend`
+- `npm start` Corre en el puerto 3000
 
 # Para ejecutar las pruebas 
 - `cd app` cambiar a la carpeta app

@@ -156,8 +156,8 @@ function App() {
                 <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
 
                 <div className="botones">
-                  <button type="submit">Confirmar</button>
-                  <button onClick={toggleEditar}>Cancelar</button>
+                  <button className='outerButton' type="submit">Confirmar</button>
+                  <button className='outerButton' onClick={toggleEditar}>Cancelar</button>
                 </div>
               </section>
             ) : (

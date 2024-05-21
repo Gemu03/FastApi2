@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Fira Code', monospace;
+  font-family: 'Lato', sans-serif;
 
 }
 
@@ -129,6 +130,8 @@ tr:nth-child(even) {background-color: #b7ccf1;}
 tr:hover {background-color: rgb(154, 158, 255);transition: 0.3s ease;color: white;}
 
 html {
+  height: 150vh;
+  overflow-x: hidden;
   --s: 49px; /* control the size*/
   --c1: #464b8b;
   --c2: #273159;
@@ -147,6 +150,7 @@ html {
 
 label, h2, h1, p{
   color: white;
+  font-weight: 600;
 }
 
 button{
@@ -197,6 +201,7 @@ button {
   color: #e8e8e8;
  }
  .outerButton{
+  max-width: 15em;
   font-weight: 700;
   color: #000000;
   border: 2px solid hsl(174, 78%, 51%);
@@ -204,7 +209,12 @@ button {
   &:hover{
     background-color: rgb(10, 7, 73);
     color: #2be4d2;
-    transition: 0;
+    transition: 0.3s;
+  }
+  & :not(:hover){
+    background-color: #b7ccf1;
+    color: #000000;
+  
   }
 }
 
