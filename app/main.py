@@ -136,7 +136,6 @@ async def update_perfil(empleado_id: int, perfil: PerfilEmpleadoBase, db: db_dep
     db_perfil.salario = perfil.salario
     db_perfil.suscripcion_notificaciones = perfil.suscripcion_notificaciones
     db.commit()
-    #actualizar_suscriptores()
     return db_perfil
 
 @app.delete("/perfil/{empleado_id}", status_code=status.HTTP_200_OK)

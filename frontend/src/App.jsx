@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useParams } from 'react-router-dom';
 import EmployeeProfile from './EmployeeProfile';
 
 function App() {
@@ -14,8 +14,7 @@ function App() {
     responsabilidad: ''
   });
 
-  const getEmpleados = (event) => {
-    event.preventDefault();
+  const getEmpleados = () => {
     fetch('http://localhost:8000/empleados/?skip=0', {
       method: 'GET',
       headers: { 'Accept': 'application/json' },
@@ -29,14 +28,19 @@ function App() {
       });
   };
 
+  useEffect(() => {
+    getEmpleados();
+  }, []);
+
   const deleteEmpleado = (id) => {
     fetch(`http://localhost:8000/empleado/${id}`, {
       method: 'DELETE',
       headers: { 'Accept': 'application/json' },
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setEmpleados((prevEmpleados) => prevEmpleados.filter((emp) => emp.id !== id));
+      .then((res) => {
+        if (res.status === 200) {
+          setEmpleados((prevEmpleados) => prevEmpleados.filter((emp) => emp.id !== id));
+        }
       })
       .catch((error) => {
         console.error('Error deleting empleado:', error);
@@ -71,7 +75,7 @@ function App() {
     const url = formData.id
       ? `http://localhost:8000/empleado/${formData.id}`
       : 'http://localhost:8000/empleado/';
-    
+
     fetch(url, {
       method: method,
       headers: {
@@ -112,8 +116,7 @@ function App() {
     }));
   };
 
-  const toggleEditar = (event) => {
-    event.preventDefault();
+  const toggleEditar = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
       setFormData({
@@ -182,40 +185,43 @@ function App() {
               </section>
             )}
           </form>
-
-          <button onClick={getEmpleados}>Obtener empleados</button>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Rol</th>
-                <th>Edad</th>
-                <th>Correo</th>
-                <th>Responsabilidad</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {empleados.filter(emp => emp).map((empleado, index) => (
-                <tr key={empleado.id || index}>
-                  <td>{empleado.id}</td>
-                  <td>{empleado.nombre}</td>
-                  <td>{empleado.rol}</td>
-                  <td>{empleado.edad}</td>
-                  <td>{empleado.correo}</td>
-                  <td>{empleado.responsabilidad}</td>
-                  <td>
-                    <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
-                    <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
-                    <Link to={`/perfil/${empleado.id}`}>
-                      <button>Ver Perfiles</button>
-                    </Link>
-                  </td>
+          <div>
+            <button onClick={getEmpleados}>Obtener empleados</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Rol</th>
+                  <th>Edad</th>
+                  <th>Correo</th>
+                  <th>Responsabilidad</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {empleados.filter(emp => emp).map((empleado, index) => (
+                  <tr key={empleado.id || index}>
+                    <td>{empleado.id}</td>
+                    <td>{empleado.nombre}</td>
+                    <td>{empleado.rol}</td>
+                    <td>{empleado.edad}</td>
+                    <td>{empleado.correo}</td>
+                    <td>{empleado.responsabilidad}</td>
+                    <td>
+                      <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
+                      <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
+                      <Link to={`/perfil/${empleado.id}`}>
+                        <button>Ver Perfiles</button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
+
         </main>
       </div>
 
@@ -227,3 +233,4 @@ function App() {
 }
 
 export default App;
+
