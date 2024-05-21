@@ -14,8 +14,8 @@ div.App{
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-height: 100vh;
-  & main{
+  min-height: 60vh;
+  & main, div.perfilContainer{
     width: 90%;
     display: flex;
     flex-grow: 1;
@@ -33,7 +33,6 @@ div.App{
         margin-bottom: 0.3em 0;
         padding: 0.5em 1em;
         & :focus, :hover{
-          border: 10px solid #0366ee;
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 6px #8cbcfe;
         }
       }
@@ -49,15 +48,21 @@ div.App{
 
 table{
   border-collapse: collapse;
-  width: 100%;
+  min-width: 68vw;
+  border: 3px solid black;
   & th, td{
-    border: 1px solid black;
-    padding: 8px;
+    padding: 0.4em;
     text-align: left;
   }
   & th{
-    background-color: #f2f2f2;
+    border: 1px solid black;
   }
+}
+
+table p, table td{
+  font-size: 0.8em;
+  min-height: 4em;
+  max-height: 4em;
 }
 
 section.isNotEditing{ 
@@ -83,11 +88,137 @@ section.isEditing{
 
 .botonesTabla{
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 1em;
+  height: 3em;
 }
 
 .perfilContainer {
   display: flex;
   justify-content: space-between;
+}
+
+#root > div:nth-child(2) > div > form > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#root > div:nth-child(2){
+  margin-top: 6em;
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
+  transition: 1s ease;
+}
+
+tr:nth-child(){color: black;}
+th:nth-child(){color: black;}
+tr:nth-child( odd ) {background-color: #f2f2f2;}
+tr:nth-child(even) {background-color: #b7ccf1;}
+
+tr:hover {background-color: rgb(154, 158, 255);transition: 0.3s ease;color: white;}
+
+html {
+  --s: 49px; /* control the size*/
+  --c1: #464b8b;
+  --c2: #273159;
+  --c3: #354eb1;
+  
+  --_g: var(--c3) 0 120deg,#0000 0;
+  background:
+    conic-gradient(from -60deg at 50% calc(100%/3),var(--_g)),
+    conic-gradient(from 120deg at 50% calc(200%/3),var(--_g)),
+    conic-gradient(from  60deg at calc(200%/3),var(--c3) 60deg,var(--c2) 0 120deg,#0000 0),
+    conic-gradient(from 180deg at calc(100%/3),var(--c1) 60deg,var(--_g)),
+    linear-gradient(90deg,var(--c1)   calc(100%/6),var(--c2) 0 50%,
+                          var(--c1) 0 calc(500%/6),var(--c2) 0);
+  background-size: calc(1.732*var(--s)) var(--s);
+}
+
+label, h2, h1, p{
+  color: white;
+}
+
+button{
+  background-color: transparent;
+  color: black;
+  border-radius: 5px;
+  padding: 0.3em 0.5em;
+  cursor: pointer;
+  width: 100%;
+}
+
+
+
+/* CSS */
+button {
+  border: 2px solid #0f746a;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1em;
+  transition: .3s;
+  z-index: 1;
+  font-family: inherit;
+  color: #0b4842;
+ }
+ 
+ button::before {
+  content: '';
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: rgb(10, 7, 73);
+  transition: .5s ease;
+  display: block;
+  z-index: -1;
+ }
+ 
+ button:hover::before {
+  width: 105%;
+ }
+ 
+ button:hover {
+  color: #e8e8e8;
+ }
+ .outerButton{
+  font-weight: 700;
+  color: #000000;
+  border: 2px solid hsl(174, 78%, 51%);
+  background: #b7ccf1;
+  &:hover{
+    background-color: rgb(10, 7, 73);
+    color: #2be4d2;
+    transition: 0;
+  }
+}
+
+div.formPerfil{
+  display: flex;
+  flex-direction: row;
+  & div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    & input{
+      margin: 0.5em;
+
+    }
+  }
 }

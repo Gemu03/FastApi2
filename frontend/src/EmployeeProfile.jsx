@@ -131,82 +131,98 @@ const EmployeeProfile = () => {
   return (
     <div className='App'>
       <h2>Perfil de Empleado, ID: {empleadoId}</h2>
-      <Link to="/">
-        <button>Volver</button>
-      </Link>
       <div className='perfilContainer'>
-<form onSubmit={savePerfil}>
-        <label htmlFor="habilidad">Habilidad</label>
-        <input
-          type="text"
-          id="habilidad"
-          name="habilidad"
-          value={formData.habilidad}
-          onChange={handleChange}
-          placeholder="Python"
-        />
 
-        <label htmlFor="años_experiencia">Años de Experiencia</label>
-        <input
-          type="number"
-          id="años_experiencia"
-          name="años_experiencia"
-          value={formData.años_experiencia}
-          onChange={handleChange}
-          placeholder="5"
-        />
+      <form onSubmit={savePerfil}>
+        <div className="formPerfil">
+          <label htmlFor="habilidad">Habilidad</label>
+          <input
+            type="text"
+            id="habilidad"
+            name="habilidad"
+            value={formData.habilidad}
+            onChange={handleChange}
+            placeholder="Python"
+          />
+        </div>
 
-        <label htmlFor="certificacion">Certificación</label>
-        <input
-          type="text"
-          id="certificacion"
-          name="certificacion"
-          value={formData.certificacion}
-          onChange={handleChange}
-          placeholder="Certificado Python"
-        />
+        <div className="formPerfil">
+          <label htmlFor="años_experiencia">Años de Experiencia</label>
+          <input
+            type="number"
+            id="años_experiencia"
+            name="años_experiencia"
+            value={formData.años_experiencia}
+            onChange={handleChange}
+            placeholder="5"
+          />
+        </div>
 
-        <label htmlFor="tiempo_en_empresa">Tiempo en la Empresa</label>
-        <input
-          type="number"
-          id="tiempo_en_empresa"
-          name="tiempo_en_empresa"
-          value={formData.tiempo_en_empresa}
-          onChange={handleChange}
-          placeholder="2"
-        />
+        <div className="formPerfil">
+          <label htmlFor="certificacion">Certificación</label>
+          <input
+            type="text"
+            id="certificacion"
+            name="certificacion"
+            value={formData.certificacion}
+            onChange={handleChange}
+            placeholder="Certificado Python"
+          />
+        </div>
 
-        <label htmlFor="salario">Salario</label>
-        <input
-          type="number"
-          id="salario"
-          name="salario"
-          value={formData.salario}
-          onChange={handleChange}
-          placeholder="50000"
-        />
+        <div className="formPerfil">
+          <label htmlFor="tiempo_en_empresa">Tiempo en la Empresa</label>
+          <input
+            type="number"
+            id="tiempo_en_empresa"
+            name="tiempo_en_empresa"
+            value={formData.tiempo_en_empresa}
+            onChange={handleChange}
+            placeholder="2"
+          />
+        </div>
 
-        <label htmlFor="suscripcion_notificaciones">Suscripción a Notificaciones</label>
-        <input
-          type="checkbox"
-          id="suscripcion_notificaciones"
-          name="suscripcion_notificaciones"
-          checked={formData.suscripcion_notificaciones}
-          onChange={(event) =>
-            setFormData((prevData) => ({
-              ...prevData,
-              suscripcion_notificaciones: event.target.checked,
-            }))
-          }
-        />
+
+        <div className="formPerfil">
+          <label htmlFor="salario">Salario</label>
+          <input
+            type="number"
+            id="salario"
+            name="salario"
+            value={formData.salario}
+            onChange={handleChange}
+            placeholder="50000"
+          />
+        </div>
+
+        <div className="formPerfil">
+          <div>
+            <label htmlFor="suscripcion_notificaciones">Suscripción a Notificaciones</label>
+            <input
+              type="checkbox"
+              id="suscripcion_notificaciones"
+              name="suscripcion_notificaciones"
+              checked={formData.suscripcion_notificaciones}
+              onChange={(event) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  suscripcion_notificaciones: event.target.checked,
+                }))
+              }
+            />
+          </div>
+        </div>
 
         <div className="botones">
-          <button type="submit">{isEditing ? 'Actualizar Perfil' : 'Agregar Perfil'}</button>
+          <button className='outerButton' type="submit">{isEditing ? 'Actualizar Perfil' : 'Agregar Perfil'}</button>
           {isEditing && <button onClick={() => setIsEditing(false)}>Cancelar</button>}
         </div>
       </form>
 
 <div>
+              <Link to="/">
+                <button className='outerButton ' >Volver</button>
+              </Link>
   <table>
         <thead>
           <tr>
@@ -231,7 +247,7 @@ const EmployeeProfile = () => {
               <td>{perfil.tiempo_en_empresa}</td>
               <td>{perfil.salario}</td>
               <td>{perfil.suscripcion_notificaciones ? 'Sí' : 'No'}</td>
-              <td>
+              <td className='botonesTabla'>
                 <button onClick={() => viewPerfil(perfil.empleado_id)}>Editar</button>
                 <button onClick={() => deletePerfil(perfil.empleado_id)}>Eliminar</button>
               </td>

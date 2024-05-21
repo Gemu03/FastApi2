@@ -179,14 +179,14 @@ function App() {
                 <input type="text" id="responsabilidad" name="responsabilidad" value={formData.responsabilidad} onChange={handleChange} placeholder="Desarrollar" />
 
                 <div className="botones">
-                  <button type="submit">Agregar empleado</button>
-                  <button onClick={toggleEditar}>Cambiar Modo</button>
+                  <button className='outerButton' type="submit">Agregar empleado</button>
+                  <button className='outerButton' onClick={toggleEditar}>Cambiar Modo</button>
                 </div>
               </section>
             )}
           </form>
           <div>
-            <button className="botonGetEmpleados" onClick={getEmpleados}>Obtener empleados</button>
+            <button className="botonGetEmpleados outerButton" onClick={getEmpleados}>Obtener empleados</button>
             <table>
               <thead>
                 <tr>
@@ -212,7 +212,7 @@ function App() {
                       <button onClick={() => viewEmpleado(empleado.id)}>Editar</button>
                       <button onClick={() => deleteEmpleado(empleado.id)}>Eliminar</button>
                       <Link to={`/perfil/${empleado.id}`}>
-                        <button>Ver Perfiles</button>
+                        <button>Perfil</button>
                       </Link>
                     </td>
                   </tr>
